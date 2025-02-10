@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="stlye.css">
+</head>
+<body>
+    <div class="half">
+        <img src="logo3.png" alt="Logo">
+        <div class="container">
+            <form id="loginForm">
+                <div class="login">
+                    <div class="name">
+                        <h1>Log In</h1>
+                    </div>
+                    <div class="inputs">
+                        <input type="text" id="loginUsername" name="username" placeholder="Username" >
+                        <input type="password" id="loginPassword" name="password" placeholder="Password">
+                    </div>
+                    <div class="submit">
+                        <label><input type="checkbox" id="rememberMe"> Remember Me</label>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <div class="button">
+                        <button type="submit">Log In</button>
+                        <p>Don't have an account? <a href="signup.html">Register</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+ document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let username = document.getElementById("loginUsername").value;
+    let password = document.getElementById("loginPassword").value;
+    let alertMessage = document.createElement("div");
+    alertMessage.style.color = "red"; 
+
+
+    let existingAlert = document.querySelector(".alert-message");
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+
+    if (username.trim() === "" || password.trim() === "") {
+        alertMessage.innerHTML = "Please enter both username and password.";
+        alertMessage.classList.add("alert-message");
+        document.querySelector(".login .inputs").appendChild(alertMessage); 
+        localStorage.setItem("isLoggedIn", "false");
+        return;
+
+    }
+
+ 
+
+
+    alertMessage.style.color = "green";
+    alertMessage.innerHTML = "Login successful! Redirecting...";
+    alertMessage.classList.add("alert-message");
+
+    document.querySelector(".login .inputs").appendChild(alertMessage); 
+
+    setTimeout(function() {
+        window.location.href = "index.html";
+           localStorage.setItem("isLoggedIn", "true");
+    }, 2000);
+});
+
+
+window.addEventListener("DOMContentLoaded", function() {
+                let isLoggedIn = localStorage.getItem("isLoggedIn");
+
+                if (isLoggedIn === "true") {
+                    let loginButton = document.querySelector(".navbar button");
+                    if (loginButton) {
+                        loginButton.style.display = "none";  
+                    }
+                }
+            });
+    </script>
+</body>
+</html>

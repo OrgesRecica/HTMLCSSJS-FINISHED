@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stlye.css">
+    <title>Signup Form</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="half">
+        <img src="logo3.png" alt="Logo">
+        <div class="container">
+            <form id="form" action="" method="POST">
+                <div class="login">
+                    <div class="name">
+                        <h1>Sign Up</h1>
+                    </div>
+    
+                    <div class="inputs">
+                        <input type="text" id="username" placeholder="Username" >
+                        <input type="email" id="email" placeholder="Email" >
+                        <input type="password" id="password" placeholder="Password" >
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password">
+                    </div>
+    
+                    <div class="submit">
+                        <label><input type="checkbox" id="termsCheckbox"> I agree to the terms and conditions</label>
+                    </div>
+                    <div class="button">
+                        <button type="submit" id="submit">Sign Up</button>
+                        <p>Already have an account? <a href="login.html">Log In</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+       
+        function validateForm(event) {
+            event.preventDefault(); 
+
+        
+            const username = document.getElementById("username");
+            const email = document.getElementById("email");
+            const password = document.getElementById("password");
+            const confirmPassword = document.getElementById("confirmPassword");
+            const termsCheckbox = document.getElementById("termsCheckbox");
+
+            let isValid = true;
+
+            const errorMessages = document.querySelectorAll('.error');
+            errorMessages.forEach(error => error.remove());
+
+ 
+            if (username.value.trim() === "") {
+                showError(username, "Username is required");
+                isValid = false;
+            }
+
+ 
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!email.value.match(emailPattern)) {
+                showError(email, "Please enter a valid email address");
+                isValid = false;
+            }
+
+            if (password.value.length < 6) {
+                showError(password, "Password must be at least 6 characters long");
+                isValid = false;
+            }
+
+            if (password.value !== confirmPassword.value) {
+                showError(confirmPassword, "Passwords do not match");
+                isValid = false;
+            }
+
+            if (!termsCheckbox.checked) {
+                showError(termsCheckbox, "You must agree to the terms and conditions");
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert("Form submitted successfully!");
+  
+            }
+        }
+
+        function showError(input, message) {
+            const error = document.createElement('p');
+            error.classList.add('error');
+            error.textContent = message;
+            input.parentElement.appendChild(error);
+        }
+
+        const form = document.getElementById("form");
+        form.addEventListener('submit', validateForm);
+    </script>
+</body>
+</html>
