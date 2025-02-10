@@ -43,64 +43,64 @@
 
     <script>
        
-        function validateForm(event) {
-            event.preventDefault(); 
+       function validateForm(event) {
+    event.preventDefault(); 
 
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const termsCheckbox = document.getElementById("termsCheckbox");
+
+    let isValid = true;
+
+    const errorMessages = document.querySelectorAll('.error');
+    errorMessages.forEach(error => error.remove());
+
+    if (username.value.trim() === "") {
+        showError(username, "Username is required");
+        isValid = false;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!email.value.match(emailPattern)) {
+        showError(email, "Please enter a valid email address");
+        isValid = false;
+    }
+
+    if (password.value.length < 6) {
+        showError(password, "Password must be at least 6 characters long");
+        isValid = false;
+    }
+
+    if (password.value !== confirmPassword.value) {
+        showError(confirmPassword, "Passwords do not match");
+        isValid = false;
+    }
+
+    if (!termsCheckbox.checked) {
+        showError(termsCheckbox, "You must agree to the terms and conditions");
+        isValid = false;
+    }
+
+    if (isValid) {
+        alert("Form submitted successfully!");
         
-            const username = document.getElementById("username");
-            const email = document.getElementById("email");
-            const password = document.getElementById("password");
-            const confirmPassword = document.getElementById("confirmPassword");
-            const termsCheckbox = document.getElementById("termsCheckbox");
+        // Redirect to index.html after successful form submission
+        window.location.href = "index.html";
+    }
+}
 
-            let isValid = true;
+function showError(input, message) {
+    const error = document.createElement('p');
+    error.classList.add('error');
+    error.textContent = message;
+    input.parentElement.appendChild(error);
+}
 
-            const errorMessages = document.querySelectorAll('.error');
-            errorMessages.forEach(error => error.remove());
+const form = document.getElementById("form");
+form.addEventListener('submit', validateForm);
 
- 
-            if (username.value.trim() === "") {
-                showError(username, "Username is required");
-                isValid = false;
-            }
-
- 
-            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            if (!email.value.match(emailPattern)) {
-                showError(email, "Please enter a valid email address");
-                isValid = false;
-            }
-
-            if (password.value.length < 6) {
-                showError(password, "Password must be at least 6 characters long");
-                isValid = false;
-            }
-
-            if (password.value !== confirmPassword.value) {
-                showError(confirmPassword, "Passwords do not match");
-                isValid = false;
-            }
-
-            if (!termsCheckbox.checked) {
-                showError(termsCheckbox, "You must agree to the terms and conditions");
-                isValid = false;
-            }
-
-            if (isValid) {
-                alert("Form submitted successfully!");
-  
-            }
-        }
-
-        function showError(input, message) {
-            const error = document.createElement('p');
-            error.classList.add('error');
-            error.textContent = message;
-            input.parentElement.appendChild(error);
-        }
-
-        const form = document.getElementById("form");
-        form.addEventListener('submit', validateForm);
     </script>
 </body>
 </html>
